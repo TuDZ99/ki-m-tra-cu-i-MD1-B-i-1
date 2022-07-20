@@ -8,7 +8,6 @@
 <h1 style="color: blue;text-align: center">BẢNG XẾP HẠNG ÂM NHẠC HOT THÁNG 7</h1><br>
 <input id="newMusic" type="text">
 <button onclick="createMusic()">Thêm</button>
-<input id="tim" type="text" placeholder="Tìm kiếm..." onclick="actionTimKiem()">
 <span id="validate"></span>
 <table border="1" style="width: 100%; text-align: center">
     <tr>
@@ -29,14 +28,45 @@
     </tbody>
 </table>
 <script>
-    let myCategory = ['Nhạc bay','Nhạc lắc','Nhạc đập đá','Nhạc hút cần','Nhạc xào ke']
+    class Category {
+        id;
+        name;
+
+        constructor(id, name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        getId() {
+            return this.id;
+        }
+
+        setId(id) {
+            this.id = id;
+        }
+
+        getName() {
+            return this.name;
+        }
+
+        setName(name) {
+            this.name = name;
+        }
+    }
+
+    let myCategory = [];
+    let Category1 = new Category( 1,'Nhạc bay')
+    let Category2 = new Category( 2,'Nhạc remix')
+    let Category3 = new Category( 3,'Nhạc lắc')
+    let Category4 = new Category( 4,'Nhạc xào ke')
+    myCategory.push(Category1, Category2, Category3, Category4);
    function music(){
         let drawTable = '';
         for (let i = 0; i < myCategory.length; i++){
             let  j = i +1;
            drawTable +='<tr>'+
                 '<td>'+j+'</td>'+
-                '<td>'+myCategory[i]+'</td>'+
+                '<td>'+myCategory[i].name+'</td>'+
                 '<td><button style="background-color: blue;color: cornsilk;border-radius: 20%" onclick="updateMusic('+i+')">Edit</button></td>'+
                 '<td><button style="background-color: red;color: cornsilk;border-radius: 20%" onclick="deleteMusic('+i+')">Delete</button></td>'
                +'</tr>'
@@ -49,25 +79,25 @@
         if (newMusic.trim() === '') {
             document.getElementById('validate').innerHTML = '<span style="color: red">Vui lòng không để trống oce</span>'
         } else {
-            console.log('newMusic===>', newMusic)
-            myCategory.push(newMusic);
+            console.log('newMusic===>', newMusic.id)
+            myCategory.push(new Category('id',newMusic));
             document.getElementById('validate').innerHTML = '<span style="color: blue">oce chưa ???</span>'
             music();
         }
     }
     function updateMusic(id) {
         console.log('id========', id)
-        let editMusic = prompt('cập nhập âm nhạc chất chơi người dơi',myCategory[id])
+        let editMusic = prompt('cập nhập âm nhạc chất chơi người dơi',myCategory[id].name)
         if (editMusic.trim()===''){
             document.getElementById('validate').innerHTML = '<span style="color: red">Vui lòng không để trống oce</span>'
         } else {
-            myCategory[id] = editMusic;
+            myCategory[id].name = editMusic;
             document.getElementById('validate').innerHTML = '<span style="color: yellow">oce rồi</span>'
             music();
         }
     }
     function deleteMusic(id) {
-        myCategory.splice(id,1)
+        myCategory.splice(id,1);
         music()
     }
 </script>
