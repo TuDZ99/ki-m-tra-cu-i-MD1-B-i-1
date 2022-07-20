@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 style="color: blue;text-align: center">BẢNG XẾP HẠNG ÂM NHẠC HOT THÁNG 7</h1><br>
+<input id="newMusic" type="text">
+<button onclick="createMusic()">Thêm</button>
+<input id="tim" type="text" placeholder="Tìm kiếm..." onclick="actionTimKiem()">
+<span id="validate"></span>
+<table border="1" style="width: 100%; text-align: center">
+    <tr>
+        <th>STT</th>
+        <th>Thể loại</th>
+        <th>Edit</th>
+        <th>delete</th>
+    </tr>
+    <tbody id="drawTable">
+<!--    <tr>-->
+<!--        <td>1</td>-->
+ <!--       <td>Nhạc vàng</td>-->
+<!--    </tr>-->
+ <!--   <tr>-->
+ <!--       <td>2</td>-->
+ <!--       <td>Nhạc đỏ</td>-->
+<!--    </tr>-->
+    </tbody>
+</table>
+<script>
+    let myCategory = ['Nhạc bay','Nhạc lắc','Nhạc đập đá','Nhạc hút cần','Nhạc xào ke']
+   function music(){
+        let drawTable = '';
+        for (let i = 0; i < myCategory.length; i++){
+            let  j = i +1;
+           drawTable +='<tr>'+
+                '<td>'+j+'</td>'+
+                '<td>'+myCategory[i]+'</td>'+
+                '<td><button style="background-color: blue;color: cornsilk;border-radius: 20%" onclick="updateMusic('+i+')">Edit</button></td>'+
+                '<td><button style="background-color: red;color: cornsilk;border-radius: 20%" onclick="deleteMusic('+i+')">Delete</button></td>'
+               +'</tr>'
+        }
+        document.getElementById('drawTable').innerHTML = drawTable;
+   }
+   music();
+    function createMusic() {
+        let newMusic = document.getElementById('newMusic').value;
+        if (newMusic.trim() === '') {
+            document.getElementById('validate').innerHTML = '<span style="color: red">Vui lòng không để trống oce</span>'
+        } else {
+            console.log('newMusic===>', newMusic)
+            myCategory.push(newMusic);
+            document.getElementById('validate').innerHTML = '<span style="color: blue">oce chưa ???</span>'
+            music();
+        }
+    }
+    function updateMusic(id) {
+        console.log('id========', id)
+        let editMusic = prompt('cập nhập âm nhạc chất chơi người dơi',myCategory[id])
+        if (editMusic.trim()===''){
+            document.getElementById('validate').innerHTML = '<span style="color: red">Vui lòng không để trống oce</span>'
+        } else {
+            myCategory[id] = editMusic;
+            document.getElementById('validate').innerHTML = '<span style="color: yellow">oce rồi</span>'
+            music();
+        }
+    }
+    function deleteMusic(id) {
+        myCategory.splice(id,1)
+        music()
+    }
+</script>
+</body>
+</html>
